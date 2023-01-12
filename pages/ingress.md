@@ -2,50 +2,25 @@
 
 If you would like to expose your application to outside the cluser, you will need to create an ingress and service resource and tie it to a domain name.
 
+There are two parts that need to happen.
+
+1. You will need to generate a certificate
+2. You will need to create a ingress resource pointing to your app service.
+
+## Update your DNS to point to guldentech infra node
+
+
+## Cert
+
+!> Be sure to update your DNS to point to guldentech infra IP addresses otherwise your cert will not be generated.
+
 Below is an example:
+```yaml```
 
-```yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: example
-  namespace: example
-spec:
-  type: ClusterIP
-  ports:
-    - name: http
-      port: 80
-      protocol: TCP
-      targetPort: 80
-  selector:
-    app: example
+## Ingress
 
----
-
-kind: Ingress
-apiVersion: extensions/v1beta1
-metadata:
-  name: example
-  namespace: example
-spec:
-  rules:
-    - host: www.example.com
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: example
-              servicePort: http
-    - host: example.com
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: example
-              servicePort: http
-```
-
-After your resources are created and accepted, open a git issue and tag it with "Ingress Request". In the issue detail what domain you would like it tied to. If it's not a guldentech.com subdomain, some configuration will need to be set on your domain provider's side to point it to guldentech ingress controller.
+Below is an example:
+```yaml```
 
 Example domain provider needed configuration for non guldentech.com domains.
 

@@ -24,7 +24,7 @@ Versions:
 
 ## Getting onboard
 
-If you are interested in utilizing GuldenTechs infrastructure, shoot a email to [guldentechjobs@gmail.com](mailto:guldentechjobs@gmail.com) and provide the following information:
+To gain access to GuldenTech and be able to deploy applications, please email [guldentechjobs@gmail.com](mailto:guldentechjobs@gmail.com) and provide the following information.
 
 * First name
 * Last name
@@ -33,5 +33,8 @@ If you are interested in utilizing GuldenTechs infrastructure, shoot a email to 
 * Will you be using our container registry Harbor?
     * If yes, please provide a password to use in the email
 
+Someone from GuldenTech will reach out and talk about your use case and see if it fits on GuldenTech.
+
+<hr>
 
 ![logo](_media/gt-words.jpg)
