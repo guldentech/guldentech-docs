@@ -9,19 +9,60 @@ There are two parts that need to happen.
 
 ## Update your DNS to point to guldentech infra node
 
+Example domain provider needed configuration for non guldentech.com domains.
+
+![dns](../_media/dns.png)
 
 ## Cert
 
 !> Be sure to update your DNS to point to guldentech infra IP addresses otherwise your cert will not be generated.
 
+Apply the following resource to your namespace. This in return will create a secret with your TLS keys.
+
 Below is an example:
-```yaml```
+```yaml
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {your_site}.com
+  namespace: {FILL_ME_IN}
+spec:
+  secretName: {your_site}.com
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: {your_site}.com
+  dnsNames:
+  - {your_site}.com
+```
 
 ## Ingress
 
+Apply the following resource to your namespace. This in return will expose your service to the outside world. It will force SSL for any connection.
+
 Below is an example:
-```yaml```
-
-Example domain provider needed configuration for non guldentech.com domains.
-
-![dns](../_media/dns.png)
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "true" # This forces SSL
+  name: {your_site}-ingress
+  namespace: {FILL_ME_IN}
+spec:
+  rules:
+  - host: {your_site}.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: {FILL_ME_IN}
+            port:
+              number: {FILL_ME_IN}
+        path: /
+        pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - {your_site}.com
+    secretName: {your_site}.com
+```
