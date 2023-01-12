@@ -2,7 +2,7 @@
 
 GuldenTech: A one stop shop for your **Platform As A Service** needs.
 
-Welcome to the gulentech developer guide. Here we will outline information needed to build and deploy your apps on guldentech infrastructure.
+Welcome to the GuldenTech developer guide. Here we will outline information needed to build and deploy your apps on guldentech infrastructure.
 
 ## GuldenTech Application Stack
 
