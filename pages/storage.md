@@ -3,9 +3,9 @@
 GuldenTech provides two types of storage.
 
 1. local-path storage class
-2. Cloud backed up nfs storage (by request)
+2. longhorn distributed block storage
 
-!> The NFS storage is rather slow, so this is only suggested in certain use cases. Talk with GuldenTech admins for nfs use cases.
+Depending on your choice, you will have diferent availability. Read below for availability insight.
 
 ## local-path
 
