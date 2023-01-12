@@ -22,7 +22,7 @@ The platform sitting on top of kubernetes is Rancher.
 Versions:
 * K8s: v1.22.17
 
-## Getting onboard
+## Onboarding
 
 To gain access to GuldenTech and be able to deploy applications, please email [guldentechjobs@gmail.com](mailto:guldentechjobs@gmail.com) and provide the following information.
 
