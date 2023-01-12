@@ -1,8 +1,6 @@
 # Access
 
-To gain access to GuldenTech and be able to deploy applications, please raise a git issue here https://github.com/rgulden/guldentech-docs/issues and tag it with "Onboard Request"
-
-Someone from GuldenTech will reach out and talk about your use case and see if it fits on GuldenTech.
+To gain access to GuldenTech and be able to deploy applications, please email [guldentechjobs@gmail.com](mailto:guldentechjobs@gmail.com). Someone from GuldenTech will reach out and talk about your use case and see if it fits on GuldenTech.
 
 ## Post Onboarding
 

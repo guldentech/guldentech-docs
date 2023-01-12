@@ -7,6 +7,8 @@ GuldenTech provides two types of storage.
 
 Depending on your choice, you will have diferent availability. Read below for availability insight.
 
+!> Email GuldenTech admins if you are still not sure one which storage class to use for your persistent data. [guldentechjobs@gmail.com](mailto:guldentechjobs@gmail.com)
+
 ## local-path
 
 Local path creates a pvc that is linked to a folder on the server, each time the pod starts it will be tied to that node. To use this storage class, refrence the example below.

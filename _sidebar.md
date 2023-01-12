@@ -1,4 +1,3 @@
-- [Getting Started](pages/intro.md)
 - [Rancher](pages/rancher.md)
 - [Storage](pages/storage.md)
 - [Ingress](pages/ingress.md)
