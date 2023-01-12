@@ -20,6 +20,18 @@ GuldenTech is 100% ran on kubernetes. If you are not familiar with kubernetes th
 The platform sitting on top of kubernetes is Rancher.
 
 Versions:
-* K3s: v1.18.20+k3s1 (https://rancher.com/products/k3s)
+* K8s: v1.22.17
+
+## Getting onboard
+
+If you are interested in utilizing GuldenTechs infrastructure, shoot a email to [guldentechjobs@gmail.com](mailto:guldentechjobs@gmail.com) and provide the following information:
+
+* First name
+* Last name
+* Will you be using our CI/CD platform Concourse?
+    * If yes, please provide a password to use in the email
+* Will you be using our container registry Harbor?
+    * If yes, please provide a password to use in the email
+
 
 ![logo](_media/gt-words.jpg)

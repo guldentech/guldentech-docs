@@ -5,11 +5,11 @@ GuldenTech provides two types of storage.
 1. local-path storage class
 2. longhorn distributed block storage
 
-Depending on your choice, you will have diferent availability. Read below for availability insight.
+Depending on your choice, you will have different availability. Read below for availability insight.
 
 !> Email GuldenTech admins if you are still not sure one which storage class to use for your persistent data. [guldentechjobs@gmail.com](mailto:guldentechjobs@gmail.com)
 
-## local-path
+## Local path
 
 Local path creates a pvc that is linked to a folder on the server, each time the pod starts it will be tied to that node. To use this storage class, refrence the example below.
 
@@ -27,15 +27,11 @@ spec:
       storage: 1Gi
 ```
 
-!> All these local paths are backed up once a day to a seperate HD.
-
 !> If you use local path, please note that if the node goes down, your pod will not move nodes, it will be in pending state until the node comes back online. Your pod is tied to the node the local-stoage is created on.
 
-##  Cloud storage with NFS
+##  Longhorn distributed block storage
 
-For apps that need 100% uptime, please create a nfs pvc.
-
-!> NFS storage is very slow, please talk with GT admins before leveraging this.
+For apps that need high uptime, please create a longhorn pvc
 
 Example:
 ```yaml
@@ -46,8 +42,14 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: nfs
+  storageClassName: longhorn
   resources:
     requests:
       storage: 1Gi
 ```
+
+!> Longhorn will create two replicas of your PVC and save them on different nodes. So if node `A` goes down, your pod can easily move to node `B` and start running with the same data available.
+
+!> Warning for statefulsets: If workload is a statefulset, you will need to set the `terminationGracePeriodSeconds` to 0. The reason being is, statefulset pods will not be rescheduled unless the orginal pod is terminated. Setting it to 0 will forefull delete the pod on the node that is down, allowing it to spawn on the other node.
+
+!> 
