@@ -1,3 +1,3 @@
 # Concourse
 
-https://github.com/rgulden/concourse-pipelines
+https://github.com/guldentech/concourse-pipelines
