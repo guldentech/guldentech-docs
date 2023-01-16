@@ -11,7 +11,7 @@ Welcome to the GuldenTech developer guide. Here we will outline information need
 | ![logo](https://www.rancher.com/assets/img/favicon.png) | [Rancher](https://rancher.guldentech.com) | K8s Console | 2.6.9 |
 | ![logo](https://concourse2.guldentech.com/public/images/favicon.png) | [Concourse](https://concourse2.guldentech.com/) | CI/CD |  7.7.0 |
 | ![logo](https://goharbor.io/favicon.svg) | [Harbor](https://harbor2.guldentech.com/) | Container Registry | 2.6.2 |
-| ![logo](_media/kuam.png) | [Uptime Kuma](https://kuma2.guldentech.com/) | Monitoring Tool | 1 |
+| ![logo](_media/kuma.png) | [Uptime Kuma](https://kuma2.guldentech.com/) | Monitoring Tool | 1 |
 
 
 ## The Platform
