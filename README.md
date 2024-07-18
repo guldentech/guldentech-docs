@@ -4,15 +4,14 @@ GuldenTech: A one stop shop for your **Platform As A Service** needs.
 
 Welcome to the GuldenTech developer guide. Here we will outline information needed to build and deploy your apps on guldentech infrastructure.
 
-## GuldenTech Application Stack
+## GuldenTech Stack
 
 | Logo | App | Purpose | Version | 
 | --- | --- | --- | --- |
-| ![logo](https://www.rancher.com/assets/img/favicon.png) | [Rancher](https://rancher.guldentech.com) | K8s Console | 2.6.13 |
-| ![logo](https://concourse2.guldentech.com/public/images/favicon.png) | [Concourse](https://concourse2.guldentech.com/) | CI/CD |  7.7.0 |
-| ![logo](https://goharbor.io/favicon.svg) | [Harbor](https://harbor2.guldentech.com/) | Container Registry | 2.6.2 |
+| ![logo](https://www.rancher.com/assets/img/favicon.png) | [Rancher](https://rancher.guldentech.com) | K8s Console | 2.8.5 |
+| ![logo](https://goharbor.io/favicon.svg) | [Harbor](https://harbor2.guldentech.com/) | Container Registry | 2.11.0 |
 | ![logo](_media/kuma.png) | [Uptime Kuma](https://kuma2.guldentech.com/) | Monitoring Tool | 1 |
-| ![logo](https://planka.app/favicon-32x32.png) | [Planka](https://planka.guldentech.com) | Kanban Board | 1.1.3 |
+| ![logo](https://k3s.io/img/k3s-logo-light.svg) | [K3s](https://k3s.io) | Lightweight Kubernetes | 1.28.11 |
 
 ## The Platform
 
@@ -20,17 +19,12 @@ GuldenTech is 100% ran on kubernetes. If you are not familiar with kubernetes th
 
 The platform sitting on top of kubernetes is Rancher.
 
-Versions:
-* K8s: v1.22.17
-
 ## Onboarding
 
 To gain access to GuldenTech and be able to deploy applications, please email [guldentechjobs@gmail.com](mailto:guldentechjobs@gmail.com) and provide the following information.
 
 * First name
 * Last name
-* Will you be using our CI/CD platform Concourse?
-    * If yes, please provide a password to use in the email
 * Will you be using our container registry Harbor?
     * If yes, please provide a password to use in the email
 

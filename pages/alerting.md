@@ -6,4 +6,4 @@ GuldenTech provides the ability for your website to be monitored in case of some
 
 ## Free website monitoring
 
-I would suggest using a third part website watcher like (DownNotifier.com)[https://www.downnotifier.com] to check if your site goes down. Or https://uptimerobot.com/
+I would suggest using a third part website watcher like [uptimerobot](https://uptimerobot.com] to check if your site goes down.

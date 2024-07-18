@@ -10,6 +10,8 @@ After you onboard, you will be able to access the Rancher console or access the 
 
 !> Modify the kubectl config file rancher provides to remove `certificate-authority-data: "LS0tLS1C.."` and its value and replace it with: `insecure-skip-tls-verify: true`
 
+!> You must be a member of the [guldentech github org](https://github.com/guldentech)
+
 ## Create a namespace!
 
 Dont forget to create a namespaces on the Rancher console for your project.

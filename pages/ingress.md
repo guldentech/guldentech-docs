@@ -6,7 +6,7 @@ If you would like to expose your application to outside the cluser, you will nee
 
 Example domain provider needed configuration for non guldentech.com domains.
 
-!> New ip: 45.55.105.98
+!> New ip: 137.220.60.21
 
 ![dns](../_media/dns.png)ß
 
@@ -20,7 +20,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
-    ingress.kubernetes.io/ssl-redirect: "true" # This forces SSL
+    ingress.kubernetes.io/ssl-redirect: "true"
+    traefik.ingress.kubernetes.io/router.middlewares: default-redirect-https@kubernetescrd
     cert-manager.io/cluster-issuer: letsencrypt-prod
   name: {your_site}-ingress
   namespace: {FILL_ME_IN}
