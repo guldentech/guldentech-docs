@@ -1,5 +1,6 @@
 - [Rancher](pages/rancher.md)
 - [Storage](pages/storage.md)
 - [Ingress](pages/ingress.md)
-- [Concourse](pages/concourse.md)
+- [Harbor](pages/harbor.md)
+- [CI/CD](pages/ci_cd.md)
 - [Alerting](pages/alerting.md)
