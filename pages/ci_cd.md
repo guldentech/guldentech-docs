@@ -66,3 +66,10 @@ spec:
     repositoryNames:
     - guldentech.com
 ```
+
+
+## Repo secrets
+
+You most likely will need to add your harbor robot user secret and rancher API token secret to the repo where you want actions to run. The rancher secret to add is the bearer token in most cases.
+
+Ask guldentech admins for help on this if needed.
