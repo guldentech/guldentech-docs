@@ -8,7 +8,7 @@ Example domain provider needed configuration for non guldentech.com domains.
 
 !> New ip: 137.220.60.21
 
-![dns](../_media/dns.png)ß
+![dns](../_media/dns.png)
 
 ## Ingress
 

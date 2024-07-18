@@ -1,6 +1,6 @@
 - [Rancher](pages/rancher.md)
 - [Storage](pages/storage.md)
 - [Ingress](pages/ingress.md)
-- [Harbor](pages/harbor.md)
+- [Container Storage](pages/container_storage.md)
 - [CI/CD](pages/ci_cd.md)
 - [Alerting](pages/alerting.md)
