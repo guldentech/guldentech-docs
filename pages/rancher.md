@@ -4,7 +4,7 @@ What is Rancher? Rancher is a web interface allowing for easy interaction with k
 
 ## Post Onboarding
 
-After you onboard, you will be able to access the Rancher console or access the cluster using kubectl. To gain access to the cluster using kubectl, log into Rancher and navigate to the `local` cluster. Once you are at the page that shows below, click the Kubeconfig file and follow the instructions it prompts.
+After you onboard, you will be able to access the Rancher console or access the cluster using kubectl. To gain access to a cluster using kubectl, log into Rancher and navigate to the cluster you want access to via kubectl. Once you are at the page that shows below, click the Kubeconfig file and follow the instructions it prompts.
 
 ![dashboard](../_media/dash.png)
 
