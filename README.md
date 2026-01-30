@@ -8,10 +8,10 @@ Welcome to the GuldenTech developer guide. Here we will outline information need
 
 | Logo | App | Purpose | Version | 
 | --- | --- | --- | --- |
-| ![logo](https://www.rancher.com/assets/img/favicon.png) | [Rancher](https://rancher.dropbear-eel.ts.net/) | K8s Console | 2.9.2 |
+| ![logo](https://www.rancher.com/assets/img/favicon.png) | [Rancher](https://rancher.dropbear-eel.ts.net/) | K8s Console | 2.10.3 |
 | ![logo](https://goharbor.io/favicon.svg) | [Harbor](https://harbor.guldentech.com/) | Container Registry | 2.11.1 |
 | ![logo](_media/kuma.png) | [Uptime Kuma](https://kuma.guldentech.com/) | Monitoring Tool | 1 |
-| ![logo](https://k3s.io/img/k3s-logo-light.svg) | [K3s](https://k3s.io) | Lightweight Kubernetes | v1.30.6 |
+| ![logo](https://k3s.io/img/k3s-logo-light.svg) | [K3s](https://k3s.io) | Lightweight Kubernetes | v1.30.14 |
 
 ## The Platform
 
