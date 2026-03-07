@@ -12,7 +12,7 @@ You can create your pull secret on rancher by running the following `kubectl` co
 
 ```bash
 kubectl create secret docker-registry guldentech-harbor-registry \
-    --docker-server=harbor2.guldentech.com \
+    --docker-server=harbor.guldentech.com \
     --docker-username=UPDATE_HERE \
     --docker-password=UPDATE_HERE \
     -n UPDATE_HERE
