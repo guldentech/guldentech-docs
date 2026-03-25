@@ -23,6 +23,8 @@ We run self-hosted runners on the GuldenTech cluster using [Actions Runner Contr
 
 4. Once onboarded, apply a `RunnerDeployment` and `HorizontalRunnerAutoscaler` to your runner namespace for each repo you want to run jobs on:
 
+!> Resources **must** be applied to your runner namespace (`<org-or-account>-runners`). The controller only watches that namespace — resources applied elsewhere will be ignored.
+
 ```bash
 kubectl apply -f runners.yaml -n <org-or-account>-runners
 ```
