@@ -1,75 +1,88 @@
-# Continuous integration and continuous delivery (CICD)
+# Continuous Integration and Continuous Delivery (CI/CD)
 
-We have switched to using Github actions for CICD. Setup for this is easy, you will need Helm and a GH access token. 
+We use GitHub Actions for CI/CD. If you plan to run workflows on GuldenTech infrastructure, you'll need self-hosted runners set up for your org or account.
 
-If you plan to use a private repo on guldentech infra, you will need to deploy self hosted runners to the cluster.
+---
 
-## Self hosted runners
+## Self-Hosted Runners
 
-We leverage self hosted runners using [Actions Runner Controller (ARC)](https://github.com/actions/actions-runner-controller)
+We run self-hosted runners on the GuldenTech cluster using [Actions Runner Controller (ARC)](https://github.com/actions/actions-runner-controller). Runners are managed centrally — you don't need to deploy anything yourself.
 
-To deploy, its very simple, create a namespace on the rancher UI, create a fine grained github access token with the permissions [defined here](https://github.com/actions/actions-runner-controller/blob/master/docs/authenticating-to-the-github-api.md) and run the following commands:
+### Getting Set Up
+
+1. Install the **GuldenTech GitHub App** on your org or personal account:
+   `https://github.com/apps/guldentech`
+
+2. After installing, email **guldentechjobs@gmail.com** with:
+   - Your **GitHub org name or personal account name**
+   - The **Installation ID** (found in the URL after installing the app):
+     - Personal account: `https://github.com/settings/installations/<INSTALLATION_ID>`
+     - Org: `https://github.com/organizations/<org>/settings/installations/<INSTALLATION_ID>`
+
+3. We'll onboard you and confirm when your runners are ready. Your runner namespace will be `<org-or-account>-runners`.
+
+4. Once onboarded, apply a `RunnerDeployment` and `HorizontalRunnerAutoscaler` to your runner namespace for each repo you want to run jobs on:
 
 ```bash
-# Create secret for GH PAT
-export gh_name=rgulden; \
-export gh_pat=XXX; \
-kubectl create secret generic controller-manager \
-    -n $gh_name-actions-runner-system \
-    --from-literal=github_token=$gh_pat
-
-# Add helm chart
-helm repo add actions-runner-controller https://actions-runner-controller.github.io/actions-runner-controller
-
-# Install
-export gh_name=rgulden; \
-helm upgrade \
-    --install \
-    --namespace $gh_name-actions-runner-system \
-    --wait \
-    "$gh_name-actions-runner-system" \
-    actions-runner-controller/actions-runner-controller \
-    --set syncPeriod=1m
+kubectl apply -f runners.yaml -n <org-or-account>-runners
 ```
-
-## Creating deployment
-
-Below is an example on creating a scale to zero runner for the `guldentech.com` repo. Make sure to update accordingly to your configuration. If you plan to get more detailed, please visit the `ARC` docs on their github repo.
-
-!> Please using scaling to zero for your runners.
 
 ```yaml
 apiVersion: actions.summerwind.dev/v1alpha1
 kind: RunnerDeployment
 metadata:
-  name: guldentech-k8s-action-runner
+  name: <repo>-runner
 spec:
   replicas: 1
   template:
     spec:
-      repository: guldentech/guldentech.com
+      repository: <org-or-account>/<repo>
       labels:
-        - "guldentech"
+        - <your-label>
 ---
 apiVersion: actions.summerwind.dev/v1alpha1
 kind: HorizontalRunnerAutoscaler
 metadata:
-  name: guldentech-k8s-action-runner-autoscaler
+  name: <repo>-runner-autoscaler
 spec:
   scaleTargetRef:
     kind: RunnerDeployment
-    name: guldentech-k8s-action-runner
+    name: <repo>-runner
   minReplicas: 0
   maxReplicas: 2
   metrics:
   - type: TotalNumberOfQueuedAndInProgressWorkflowRuns
     repositoryNames:
-    - guldentech.com
+    - <repo>
 ```
 
+---
 
-## Repo secrets
+## Using Runners in Your Workflows
 
-You most likely will need to add your harbor robot user secret and rancher API token secret to the repo where you want actions to run. The rancher secret to add is the bearer token in most cases.
+Once onboarded, add `runs-on: [self-hosted]` to your workflow jobs. No other configuration needed.
 
-Ask guldentech admins for help on this if needed.
+```yaml
+name: Docker Build and Push
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: [self-hosted]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+```
+
+---
+
+## Repo Secrets
+
+You will likely need to add your Harbor robot user secret and Rancher API token to your repo for workflows to deploy. The Rancher secret to add is the bearer token in most cases.
+
+Email **guldentechjobs@gmail.com** or ask a GuldenTech admin for help.
