@@ -1,27 +1,36 @@
-# Continuous Integration and Continuous Delivery (CI/CD)
+# CI/CD
 
-We use GitHub Actions for CI/CD. If you plan to run workflows on GuldenTech infrastructure, you'll need self-hosted runners set up for your org or account.
+GuldenTech uses [GitHub Actions](https://docs.github.com/en/actions) for CI/CD, with self-hosted runners running directly on the GuldenTech cluster.
 
 ---
 
 ## Self-Hosted Runners
 
-We run self-hosted runners on the GuldenTech cluster using [Actions Runner Controller (ARC)](https://github.com/actions/actions-runner-controller). Runners are managed centrally — you don't need to deploy anything yourself.
+Runners are managed centrally via [Actions Runner Controller (ARC)](https://github.com/actions/actions-runner-controller) — you don't need to manage any infrastructure yourself. Once onboarded, your workflows run on the cluster automatically.
 
-### Getting Set Up
+### Getting Onboarded
 
-1. Install the **GuldenTech GitHub App** on your org or personal account:
-   `https://github.com/apps/guldentech`
+**Step 1 — Install the GuldenTech GitHub App**
 
-2. After installing, email **guldentechjobs@gmail.com** with:
-   - Your **GitHub org name or personal account name**
-   - The **Installation ID** (found in the URL after installing the app):
-     - Personal account: `https://github.com/settings/installations/<INSTALLATION_ID>`
-     - Org: `https://github.com/organizations/<org>/settings/installations/<INSTALLATION_ID>`
+Install the app on your org or personal account:
 
-3. We'll onboard you and confirm when your runners are ready. Your runner namespace will be `<org-or-account>-runners`.
+👉 [https://github.com/apps/guldentech](https://github.com/apps/guldentech)
 
-4. Once onboarded, apply a `RunnerDeployment` and `HorizontalRunnerAutoscaler` to your runner namespace for each repo you want to run jobs on:
+**Step 2 — Email us your details**
+
+Send an email to **guldentechjobs@gmail.com** with:
+- Your GitHub org name or personal account name
+- Your **Installation ID**, found in the URL after installing the app:
+  - Personal: `https://github.com/settings/installations/<INSTALLATION_ID>`
+  - Org: `https://github.com/organizations/<org>/settings/installations/<INSTALLATION_ID>`
+
+**Step 3 — We onboard you**
+
+We'll set up your controller and confirm when you're ready. Your runner namespace will be `<org-or-account>-runners`.
+
+**Step 4 — Deploy your runner resources**
+
+Create a `RunnerDeployment` and `HorizontalRunnerAutoscaler` for each repo you want runners on, and apply them to your runner namespace.
 
 !> Resources **must** be applied to your runner namespace (`<org-or-account>-runners`). The controller only watches that namespace — resources applied elsewhere will be ignored.
 
@@ -62,14 +71,16 @@ spec:
 
 ## Using Runners in Your Workflows
 
-Once onboarded, add `runs-on: [self-hosted]` to your workflow jobs. No other configuration needed.
+Once onboarded, set `runs-on: [self-hosted]` in your workflow jobs. That's it.
 
 ```yaml
 name: Docker Build and Push
+
 on:
   push:
     branches:
       - main
+
 jobs:
   build:
     runs-on: [self-hosted]
@@ -85,6 +96,11 @@ jobs:
 
 ## Repo Secrets
 
-You will likely need to add your Harbor robot user secret and Rancher API token to your repo for workflows to deploy. The Rancher secret to add is the bearer token in most cases.
+Most workflows will need secrets for Harbor and Rancher. Add them under your repo's **Settings → Secrets and variables → Actions**:
 
-Email **guldentechjobs@gmail.com** or ask a GuldenTech admin for help.
+| Secret | Description |
+|---|---|
+| Harbor robot user credentials | Used to push/pull images |
+| Rancher API bearer token | Used to trigger deployments |
+
+> Ask a GuldenTech admin or email **guldentechjobs@gmail.com** if you need help retrieving these.
