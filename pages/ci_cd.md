@@ -48,6 +48,7 @@ spec:
   template:
     spec:
       repository: <org-or-account>/<repo>
+      serviceAccountName: <service-account-name>  # optional — see Advanced section
       labels:
         - <your-label>
 ---
@@ -174,23 +175,39 @@ subjects:
 
 ### Update your RunnerDeployment
 
-Add `serviceAccountName` to your existing `RunnerDeployment`:
+If you already have a `RunnerDeployment` applied, patch it in place:
 
-```yaml
-spec:
-  template:
-    spec:
-      serviceAccountName: runner-deployer
-      repository: <org-or-account>/<repo>
+```bash
+kubectl patch runnerdeployment <repo>-runner \
+  -n <org-or-account>-runners \
+  --type=merge \
+  -p '{"spec":{"template":{"spec":{"serviceAccountName":"runner-deployer"}}}}'
 ```
+
+For new deployments, include `serviceAccountName` directly in your YAML — see the template in the [Self-Hosted Runners](#self-hosted-runners) section above.
 
 ### Adjust permissions as needed
 
 The example above grants access to `deployments` only. Expand `rules` based on what your pipelines actually do:
 
-| Resource | Verbs | Use case |
-|---|---|---|
-| `deployments` | `get`, `patch`, `update` | Rolling out a new image |
-| `configmaps` | `get`, `create`, `update` | Managing app config |
-| `secrets` | `get` | Reading secrets in-pipeline (use sparingly) |
-| `pods` | `get`, `list` | Checking rollout status |
+| Resource | apiGroup | Verbs | Use case |
+|---|---|---|---|
+| `deployments` | `apps` | `get`, `patch`, `update` | Rolling out a new image |
+| `configmaps` | `` (core) | `get`, `create`, `update` | Managing app config |
+| `secrets` | `` (core) | `get` | Reading secrets in-pipeline (use sparingly) |
+| `pods` | `` (core) | `get`, `list` | Checking rollout status |
+| `services` | `` (core) | `get`, `create`, `patch`, `update` | Exposing app internally |
+| `ingresses` | `networking.k8s.io` | `get`, `create`, `patch`, `update` | Managing external access / TLS |
+
+### Full access (wildcard)
+
+If you want the runner to have unrestricted access within a namespace, you can use a wildcard rule:
+
+```yaml
+rules:
+  - apiGroups: ["*"]
+    resources: ["*"]
+    verbs: ["*"]
+```
+
+!> **Avoid this in production.** Wildcard permissions mean a compromised runner or a buggy pipeline step could delete, overwrite, or exfiltrate anything in that namespace — including secrets. Use specific rules whenever possible and only fall back to `*` for quick experimentation or non-sensitive environments.
