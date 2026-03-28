@@ -193,10 +193,10 @@ The example above grants access to `deployments` only. Expand `rules` based on w
 | Resource | apiGroup | Verbs | Use case |
 |---|---|---|---|
 | `deployments` | `apps` | `get`, `patch`, `update` | Rolling out a new image |
-| `configmaps` | `` (core) | `get`, `create`, `update` | Managing app config |
-| `secrets` | `` (core) | `get` | Reading secrets in-pipeline (use sparingly) |
-| `pods` | `` (core) | `get`, `list` | Checking rollout status |
-| `services` | `` (core) | `get`, `create`, `patch`, `update` | Exposing app internally |
+| `configmaps` | core | `get`, `create`, `update` | Managing app config |
+| `secrets` | core | `get` | Reading secrets in-pipeline (use sparingly) |
+| `pods` | core | `get`, `list` | Checking rollout status |
+| `services` | core | `get`, `create`, `patch`, `update` | Exposing app internally |
 | `ingresses` | `networking.k8s.io` | `get`, `create`, `patch`, `update` | Managing external access / TLS |
 
 ### Full access (wildcard)
