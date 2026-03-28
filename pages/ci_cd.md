@@ -118,3 +118,79 @@ Most workflows will need secrets for Harbor and Rancher. Add them under your rep
 | `RANCHER_TOKEN` | Rancher API bearer token — used to trigger deployments |
 
 > Ask a GuldenTech admin or email **guldentechjobs@gmail.com** if you need help retrieving these.
+
+---
+
+## Advanced — In-Cluster kubectl Access via RBAC
+
+?> This approach is experimental. It skips the need for a `RANCHER_TOKEN` secret by leveraging the runner pod's mounted service account token for in-cluster `kubectl` access.
+
+Since ARC runners run as pods inside the cluster, they can authenticate against the Kubernetes API directly using a Kubernetes ServiceAccount — no external token required. You grant that ServiceAccount namespace-scoped permissions via `Role` and `RoleBinding`, so runners can only touch the namespaces you explicitly allow.
+
+### How it works
+
+1. A dedicated `ServiceAccount` is created in your runner namespace
+2. A `Role` is created in your **app's namespace** defining what actions are allowed
+3. A `RoleBinding` in the app namespace binds the role to the runner ServiceAccount (cross-namespace references are supported)
+4. The `RunnerDeployment` is updated to use the ServiceAccount
+5. Inside the runner pod, `kubectl` automatically uses the mounted token — no kubeconfig or secret needed
+
+### RBAC resources
+
+Apply these to set up access. Repeat the `Role` + `RoleBinding` pair for each app namespace you want the runner to be able to deploy to.
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: runner-deployer
+  namespace: <org-or-account>-runners
+---
+# Create one Role + RoleBinding per app namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: runner-deployer
+  namespace: <app-namespace>
+rules:
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get", "list", "patch", "update"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: runner-deployer
+  namespace: <app-namespace>
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: runner-deployer
+subjects:
+  - kind: ServiceAccount
+    name: runner-deployer
+    namespace: <org-or-account>-runners
+```
+
+### Update your RunnerDeployment
+
+Add `serviceAccountName` to your existing `RunnerDeployment`:
+
+```yaml
+spec:
+  template:
+    spec:
+      serviceAccountName: runner-deployer
+      repository: <org-or-account>/<repo>
+```
+
+### Adjust permissions as needed
+
+The example above grants access to `deployments` only. Expand `rules` based on what your pipelines actually do:
+
+| Resource | Verbs | Use case |
+|---|---|---|
+| `deployments` | `get`, `patch`, `update` | Rolling out a new image |
+| `configmaps` | `get`, `create`, `update` | Managing app config |
+| `secrets` | `get` | Reading secrets in-pipeline (use sparingly) |
+| `pods` | `get`, `list` | Checking rollout status |
