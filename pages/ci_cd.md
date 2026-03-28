@@ -86,10 +86,23 @@ jobs:
     runs-on: [self-hosted]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Harbor
+        uses: docker/login-action@v4
+        with:
+          registry: harbor.guldentech.com
+          username: ${{ secrets.HARBOR_USERNAME }}
+          password: ${{ secrets.HARBOR_PASSWORD }}
+
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: harbor.guldentech.com/<project>/<image>:latest
 ```
 
 ---
@@ -98,9 +111,10 @@ jobs:
 
 Most workflows will need secrets for Harbor and Rancher. Add them under your repo's **Settings → Secrets and variables → Actions**:
 
-| Secret | Description |
+| Secret Name | Description |
 |---|---|
-| Harbor robot user credentials | Used to push/pull images |
-| Rancher API bearer token | Used to trigger deployments |
+| `HARBOR_USERNAME` | Harbor robot user name — used to authenticate image push/pull |
+| `HARBOR_PASSWORD` | Harbor robot user password |
+| `RANCHER_TOKEN` | Rancher API bearer token — used to trigger deployments |
 
 > Ask a GuldenTech admin or email **guldentechjobs@gmail.com** if you need help retrieving these.
