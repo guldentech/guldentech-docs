@@ -2,7 +2,9 @@
 
 **Open Rancher: [https://rancher.dropbear-eel.ts.net](https://rancher.dropbear-eel.ts.net)** and sign in with GitHub.
 
-!> You must be a member of the [guldentech github org](https://github.com/guldentech).
+!> Login only works once you've been onboarded: an admin adds your GitHub account to your own Rancher project. Until
+then, Rancher refuses the login. Email [guldentechjobs@gmail.com](mailto:guldentechjobs@gmail.com) with your GitHub
+username to get set up.
 
 Rancher is the web console for the GuldenTech Kubernetes clusters. Each user gets their own Rancher project, and you
 create your Kubernetes namespaces inside it. You can use the console in your browser, or work from your terminal
