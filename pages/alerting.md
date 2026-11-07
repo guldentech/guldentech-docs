@@ -1,9 +1,18 @@
 # Alerting
 
-GuldenTech provides the ability for your website to be monitored in case of some unexpected downage. We leverage kuma-uptime to curl your website every 60 seconds to make sure it is still running. Kuma will post a alert to the GuldenTech discord alerting everyone about the issue. This can be customed to send you a notification a different way.
+## Platform status
 
-!> Please email [guldentechjobs@gmail.com](mailto:guldentechjobs@gmail.com) to enable alerting on your website.
+[status.guldentech.com](https://status.guldentech.com/) shows the health of the GuldenTech platform: the Cloudflare
+Tunnels, ingress (Traefik), TLS certificates, Kubernetes, storage, backups, Rancher, Harbor and the GitHub Actions
+runners. It's checked every minute, runs on Cloudflare (so it stays up even if the cluster is down), and is where
+incidents and planned maintenance are posted.
 
-## Free website monitoring
+Check it first if your site, a deploy or an image pull suddenly stops working.
 
-I would suggest using a third part website watcher like [uptimerobot](https://uptimerobot.com) to check if your site goes down.
+## Monitoring your own website
+
+The status page checks the platform, not individual websites. To get alerted when your own site goes down, use a free
+external monitor such as [UptimeRobot](https://uptimerobot.com), pointed at your site's public URL (and a health
+endpoint if your app has one).
+
+?> Questions or something looks wrong? Email [guldentechjobs@gmail.com](mailto:guldentechjobs@gmail.com).
