@@ -41,7 +41,9 @@ Kubeconfig file button shown below.
 
 ![dashboard](../_media/dash.png)
 
-!> Modify the kubectl config file rancher provides to remove `certificate-authority-data: "LS0tLS1C.."` and its value and replace it with: `insecure-skip-tls-verify: true`
+The file works as downloaded, with no edits needed. Save it somewhere private (for example `~/.kube/guldentech.yaml`)
+and point tools at it with `--kubeconfig` or `KUBECONFIG`. It contains a token that expires after 30 days, so treat it
+like a password and download a new one when it stops working.
 
 ## Create a namespace!
 
