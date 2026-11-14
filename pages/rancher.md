@@ -1,6 +1,9 @@
 # Rancher
 
-**Open Rancher: [https://rancher.dropbear-eel.ts.net](https://rancher.dropbear-eel.ts.net)** and sign in with GitHub.
+**Open Rancher: [https://console.guldentech.com](https://console.guldentech.com)** and sign in with GitHub.
+
+?> Rancher moved here from `rancher.dropbear-eel.ts.net` in November 2026. If you set up the CLI or downloaded a
+kubeconfig before that, log in again with the new address below, or download a fresh kubeconfig.
 
 !> Login only works once you've been onboarded: an admin adds your GitHub account to your own Rancher project. Until
 then, Rancher refuses the login. Email [guldentechjobs@gmail.com](mailto:guldentechjobs@gmail.com) with your GitHub
@@ -21,7 +24,7 @@ with an API key and runs `kubectl` through Rancher, so there's no kubeconfig fil
    description and an expiry, and copy the **Bearer Token**. It's shown only once.
 3. Log in, and pick your project when asked:
    ```bash
-   rancher login https://rancher.dropbear-eel.ts.net --token <bearer-token>
+   rancher login https://console.guldentech.com --token <bearer-token>
    ```
 4. Use it like `kubectl`:
    ```bash
