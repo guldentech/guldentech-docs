@@ -59,26 +59,11 @@ Finish step 4 first.
 
 ## What Cloudflare handles
 
-- **HTTPS.** Cloudflare serves the certificate. There's nothing to configure in your app, and no certificate secret to
-  create or renew. Plain `http://` requests are redirected to `https://`.
-- **Caching.** Cloudflare caches static files like images, CSS and JS, so after replacing a file under the same name,
-  visitors may see the old one for a few hours.
-- **Your app sees plain HTTP.** The request reaches your pod over the tunnel as normal HTTP, with the visitor's
-  original scheme in the `X-Forwarded-Proto` header. If your framework redirects to HTTPS itself, make it trust that
-  header, or it can loop.
+HTTPS (there's no certificate to create or renew, and `http://` is redirected), and caching of static files, so a
+replaced file under the same name can look old for a few hours. Your app receives plain HTTP with the visitor's scheme
+in the `X-Forwarded-Proto` header: if your framework redirects to HTTPS itself, make it trust that header or it can loop.
 
-!> Uploads are limited to 100 MB per request, a Cloudflare free-plan limit. Split large uploads into chunks.
+!> Uploads are limited to 100 MB per request (a Cloudflare free-plan limit). Split large uploads into chunks.
 
-## Staying out of search engines
-
-If a site shouldn't show up on Google (a staging copy, for example), tell us in the pull request. We add a rule that
-marks it `noindex`.
-
-## Don't apply your own Ingress
-
-Older guides had you apply an Ingress with cert-manager and Traefik annotations. That no longer works:
-
-- You don't have permission to create Ingresses, so `kubectl apply` of one is refused.
-- The cluster no longer issues certificates for sites, and Traefik no longer serves them.
-- If your GitHub Actions workflow or `manifests/` folder still applies an Ingress, remove it. The deploy will fail on it,
-  even though the rest of it goes through.
+You don't apply an Ingress yourself any more, and a workflow or `manifests/` folder that still does will fail on it.
+To keep a staging site out of search engines, say so in your pull request and we add a `noindex` rule.

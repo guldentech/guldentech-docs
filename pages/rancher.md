@@ -57,5 +57,6 @@ it shows up under your project in Rancher.
 ## What your role allows
 
 You have the **Tenant** role in your project. You can run apps, read logs, open a shell in a pod and manage your own
-Secrets, ConfigMaps and volumes. You can only look at Ingresses, network policies and quotas, and you can't create
-namespaces or add people to your project. Details in [Namespaces and limits](/pages/namespaces?id=what-you-can-do-in-your-namespaces).
+Secrets, ConfigMaps, volumes and Roles. You can only look at Ingresses, network policies, quotas and events. You can't
+create namespaces, change network rules or hostnames (those are pull requests, see
+[Namespaces and limits](/pages/namespaces?id=making-a-change-pull-request)), or add people to your project.
