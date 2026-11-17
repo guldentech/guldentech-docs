@@ -22,7 +22,7 @@ GuldenTech is 100% ran on kubernetes. If you are not familiar with kubernetes th
 The platform sitting on top of kubernetes is Rancher.
 
 Namespaces, their limits and network rules, and the hostnames that point at your apps are managed by GuldenTech in a
-single reviewed repository, `guldentech-k8s`. You change them with a pull request, and you build, push and deploy the
+single repository, `guldentech-k8s`. You change them with a pull request, and you build, push and deploy the
 app itself. See
 [Getting started](/pages/getting-started) for who does what.
 
