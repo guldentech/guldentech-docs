@@ -54,17 +54,6 @@ directly, so you propose changes from a fork.
 4. We review it. No automatic checks run on a pull request from a fork, so reviewing is done by us. When it's merged,
    the change is applied to the cluster within a minute or two.
 
-?> `<your-project>` is the folder named after your Rancher project, and `<namespace>` the name of your namespace. Look at
-a neighbouring folder for an example. You only ever change files under your own project folder.
-
-!> A pull request that touches another project's folder, or the shared files at the top (`defaults.yaml`, `main.tf`, the
-workflows), won't be merged.
-
-## What you can do in your namespaces
-
-You have the **Tenant** role in your Rancher project. You can run apps (Deployments, StatefulSets, Jobs, CronJobs,
-Services, ConfigMaps, Secrets, volumes), read logs, open a shell in a pod, and create Roles and RoleBindings (for a CI
-service account, for example) limited to permissions you already hold.
-
-You can only read: Ingresses, network policies, quotas, certificates and events. You can't create namespaces, write
-network policies or Ingresses, add project members, or create clusters.
+`<your-project>` is the folder named after your Rancher project, and `<namespace>` your namespace's name; look at a
+neighbouring folder for an example. Only change files under your own project folder: a pull request that touches another
+project or the shared files at the top (`defaults.yaml`, `main.tf`, the workflows) won't be merged.

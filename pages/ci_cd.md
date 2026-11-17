@@ -164,23 +164,16 @@ request to `guldentech-k8s`, see [Namespaces and limits](/pages/namespaces?id=ma
 
 ## Building images
 
-Runners can build images with Docker by default. That works through a privileged "Docker-in-Docker" helper container
-next to the runner, which is more access than a build should need. We're moving runners to a shared, rootless
-**BuildKit** instead: the runner sends the build to BuildKit, which builds and pushes straight to Harbor. If you want
-that, ask us to set it up for your runner namespace, then:
-
-- set `dockerEnabled: false` on your `RunnerDeployment` (`spec.template.spec`);
-- replace the Buildx step in your workflow with a remote driver:
+Runners build with Docker through a privileged Docker-in-Docker helper by default. We're moving to a rootless
+**BuildKit** instead: ask us to set it up for your runner namespace, then set `dockerEnabled: false` on your
+`RunnerDeployment` and give the Buildx step a remote driver. The rest of the workflow stays the same.
 
 ```yaml
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+      - uses: docker/setup-buildx-action@v3
         with:
           driver: remote
           endpoint: tcp://buildkitd.<tenant>-buildkit.svc.cluster.local:1234
 ```
-
-The rest of the workflow (`docker/login-action`, `docker/build-push-action`) stays the same.
 
 ---
 
