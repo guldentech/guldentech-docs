@@ -2,8 +2,8 @@
 
 Each app lives in a Kubernetes **namespace** inside your Rancher project. Every namespace starts from the same
 safe defaults. You can't create namespaces or change these rules in Rancher. They live in the `guldentech-k8s` repository, and you
-change them with a pull request that a GuldenTech admin merges. Only these settings go through a pull request: your
-app's code and its own repositories are yours, and nobody reviews them.
+change them with a pull request that a GuldenTech admin merges. Only these settings go through a pull request. Your
+Deployments, Services and app code are yours: you apply them yourself, and nobody reviews or merges them.
 
 ## Defaults
 
