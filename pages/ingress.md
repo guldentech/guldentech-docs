@@ -24,7 +24,7 @@ ingresses:
 ```
 
 Use your Service's name and port (a Service of type `ClusterIP`, see [Getting started](/pages/getting-started)). One
-Ingress can list several hosts. When we merge it, the hostname starts working a minute or two later. To change or
+Ingress can list several hosts. When it's merged, the hostname starts working a minute or two later. To change or
 remove a hostname, change or delete its block the same way.
 
 Rules the pull request has to follow (a change that breaks them is rejected):

@@ -10,7 +10,7 @@ Cloudflare answers the visitor (HTTPS, caching), a tunnel carries the request in
 to your app. You never deal with IP addresses or certificates.
 
 Namespaces, network rules and hostnames live in the `guldentech-k8s` repository. You change them with a pull request,
-we review and merge it, and the cluster follows.
+an admin merges it, and the cluster follows.
 
 ## 1. Get onboarded
 

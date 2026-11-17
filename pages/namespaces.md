@@ -2,7 +2,8 @@
 
 Each app lives in a Kubernetes **namespace** inside your Rancher project. Every namespace starts from the same
 safe defaults. You can't create namespaces or change these rules in Rancher. They live in the `guldentech-k8s` repository, and you
-change them with a pull request that we review and merge.
+change them with a pull request that a GuldenTech admin merges. Only these settings go through a pull request: your
+app's code and its own repositories are yours, and nobody reviews them.
 
 ## Defaults
 
@@ -51,7 +52,7 @@ directly, so you propose changes from a fork.
    quota: { limits.memory: 4Gi }  # more memory than the default quota
    ```
 3. **Open a pull request** against `guldentech/guldentech-k8s`. Say what you changed and why.
-4. We review it. No automatic checks run on a pull request from a fork, so reviewing is done by us. When it's merged,
+4. A GuldenTech admin checks that it only changes your namespace's settings, and merges it. When it's merged,
    the change is applied to the cluster within a minute or two.
 
 `<your-project>` is the folder named after your Rancher project, and `<namespace>` your namespace's name; look at a
