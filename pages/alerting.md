@@ -3,8 +3,8 @@
 ## Platform status
 
 [status.guldentech.com](https://status.guldentech.com/) shows the health of the GuldenTech platform: the Cloudflare
-Tunnels, ingress (Traefik), TLS certificates, Kubernetes, storage, backups, Rancher, Harbor and the GitHub Actions
-runners. It's checked every minute, runs on Cloudflare (so it stays up even if the cluster is down), and is where
+Tunnels, the ingress controller that publishes hostnames, Kubernetes, storage, backups, Rancher, Harbor and the GitHub
+Actions runners. It's checked every minute, runs on Cloudflare (so it stays up even if the cluster is down), and is where
 incidents and planned maintenance are posted.
 
 Check it first if your site, a deploy or an image pull suddenly stops working.

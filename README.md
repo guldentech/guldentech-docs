@@ -4,6 +4,8 @@ GuldenTech: A one stop shop for your **Platform As A Service** needs.
 
 Welcome to the GuldenTech developer guide. Here we will outline information needed to build and deploy your apps on guldentech infrastructure.
 
+**New here? Start with [Getting started](/pages/getting-started).**
+
 ## GuldenTech Stack
 
 | Logo | App | Purpose | Version | 
@@ -18,6 +20,11 @@ Welcome to the GuldenTech developer guide. Here we will outline information need
 GuldenTech is 100% ran on kubernetes. If you are not familiar with kubernetes there may be a little bit of a learning curve, but we provide an easy to navigate web console that sits on top of kubernetes to help you quickly navigate through your workloads and resources.
 
 The platform sitting on top of kubernetes is Rancher.
+
+Namespaces, their limits and network rules, and the hostnames that point at your apps are managed by GuldenTech in a
+single reviewed repository, `guldentech-k8s`. You change them with a pull request, and you build, push and deploy the
+app itself. See
+[Getting started](/pages/getting-started) for who does what.
 
 ## Onboarding
 
