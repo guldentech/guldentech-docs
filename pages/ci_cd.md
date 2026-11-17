@@ -157,8 +157,8 @@ Expand `rules` based on what your pipelines actually do:
 ### What a runner can't be given
 
 You can only grant a runner permissions you hold yourself, and the Tenant role can't write Ingresses, network policies
-or namespaces. A Role that includes them (a wildcard `*` rule, for example) is refused. If a pipeline needs one of
-those changed, ask us.
+or namespaces. A Role that includes them (a wildcard `*` rule, for example) is refused. Those are changed with a pull
+request to `guldentech-k8s`, see [Namespaces and limits](/pages/namespaces?id=making-a-change-pull-request).
 
 ---
 

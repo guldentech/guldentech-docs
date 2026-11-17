@@ -51,8 +51,8 @@ like a password and download a new one when it stops working.
 ## Namespaces
 
 You can't create namespaces in Rancher: they're set up by GuldenTech together with their limits and network rules.
-Ask us for one (or more) by email, see [Namespaces and limits](/pages/namespaces). Once it exists it shows up under
-your project in Rancher.
+Add one with a pull request, see [Making a change](/pages/namespaces?id=making-a-change-pull-request). Once it's merged
+it shows up under your project in Rancher.
 
 ## What your role allows
 
