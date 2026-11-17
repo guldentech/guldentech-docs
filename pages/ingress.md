@@ -1,74 +1,67 @@
-# Ingress to your application
+# Hostnames and domains
 
-If you would like to expose your application to outside the cluser, you will need to create an ingress and service resource and tie it to a domain name.
+To put your app on the internet, you need a hostname (like `myapp.guldentech.com` or `www.mysite.com`) that points at
+your Service. **We publish hostnames for you**: you don't create an Ingress, and you can't. Every hostname on the
+platform is listed in one place, the `guldentech-k8s` repository, so nobody can claim an address that belongs to
+someone else.
 
-## DNS
+## Request a hostname
 
-GuldenTech is moving to [Cloudflare Tunnels](https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/)
-exclusively. Visitors connect to Cloudflare, and Cloudflare forwards traffic to the cluster over a private tunnel.
-There is no server IP to point your domain at anymore.
+Email [guldentechjobs@gmail.com](mailto:guldentechjobs@gmail.com) with:
 
-!> The old Miami server (`144.202.38.252`) is being retired. If your domain still points at it, reach out to
-Ryan so we can move it over before it's shut off.
+- the hostname you want (and `www.` too, if it's your own domain)
+- your namespace
+- the **Service name and port** to send the traffic to (a Service of type `ClusterIP`, see
+  [Getting started](/pages/getting-started))
 
-### A `guldentech.com` subdomain
+We add it, the change is reviewed and merged, and a minute or two later `https://<hostname>` works. To change or remove
+a hostname, ask the same way.
 
-Nothing to do. `*.guldentech.com` already points at the cluster, so create your Ingress (below) with a host like
-`myapp.guldentech.com` and it works.
+?> Make sure the Service exists and has running pods first. Until it does, visitors get a Cloudflare or 502 error
+page.
 
-### Your own domain
+## A `guldentech.com` subdomain
 
-Work with Ryan to set your domain up. It has to move into GuldenTech's Cloudflare account, which means switching
-its nameservers, not adding an A or CNAME record. Cloudflare can only route a domain through the tunnel when its
-DNS is hosted there.
+Nothing else to do: `*.guldentech.com` is already ours. Tell us the name you want, for example `myapp.guldentech.com`.
 
-1. Reach out to Ryan ([guldentechjobs@gmail.com](mailto:guldentechjobs@gmail.com)) with your domain and a copy of
-   all its current DNS records. Include email records (MX, SPF/TXT, DKIM) so mail keeps working.
-2. Ryan adds the domain to Cloudflare, copies your records, and sends you two nameservers, like
-   `dale.ns.cloudflare.com` and `dina.ns.cloudflare.com`.
+## Your own domain
+
+Your domain has to move into GuldenTech's Cloudflare account, which means switching its nameservers (not adding an A or
+CNAME record). Cloudflare can only route a domain through the tunnel when its DNS is hosted there.
+
+1. Email us your domain and a copy of all its current DNS records. Include email records (MX, SPF/TXT, DKIM) so mail
+   keeps working.
+2. We add the domain to Cloudflare, copy your records, and send you two nameservers, like `dale.ns.cloudflare.com` and
+   `dina.ns.cloudflare.com`.
 3. At your registrar (Porkbun, GoDaddy, Namecheap, ...), replace the domain's nameservers with those two.
 4. The switch usually takes minutes, sometimes a few hours. Your site keeps working from its old setup until then.
+5. Once the nameservers have switched, we publish the hostname (see above).
 
-After the switch, GuldenTech manages your domain's DNS records. Ask Ryan when you need one added or changed.
+After the switch, GuldenTech manages your domain's DNS records. Ask us when you need one added or changed.
 
-?> What Cloudflare handles for you: HTTP is redirected to HTTPS, and visitors get a Cloudflare certificate on top
-of the cluster's Let's Encrypt one. Cloudflare also caches static files like images, CSS and JS, so after
-replacing a file under the same name, visitors may see the old one for a few hours.
+!> A domain that isn't on GuldenTech's Cloudflare can't be published. Don't ask us to publish one before step 4 is done.
+
+## What Cloudflare handles
+
+- **HTTPS.** Cloudflare serves the certificate. There's nothing to configure in your app, and no certificate secret to
+  create or renew. Plain `http://` requests are redirected to `https://`.
+- **Caching.** Cloudflare caches static files like images, CSS and JS, so after replacing a file under the same name,
+  visitors may see the old one for a few hours.
+- **Your app sees plain HTTP.** The request reaches your pod over the tunnel as normal HTTP, with the visitor's
+  original scheme in the `X-Forwarded-Proto` header. If your framework redirects to HTTPS itself, make it trust that
+  header, or it can loop.
 
 !> Uploads are limited to 100 MB per request, a Cloudflare free-plan limit. Split large uploads into chunks.
 
-## Ingress
+## Staying out of search engines
 
-Apply the following resource to your namespace. This in return will expose your service to the outside world. It will force SSL for any connection.
+If a site shouldn't show up on Google (a staging copy, for example), tell us. We add a rule that marks it `noindex`.
 
-Below is an example:
-```yaml
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  annotations:
-    ingress.kubernetes.io/ssl-redirect: "true"
-    traefik.ingress.kubernetes.io/router.middlewares: default-redirect-https@kubernetescrd
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-  name: {your_site}-ingress
-  namespace: {FILL_ME_IN}
-spec:
-  rules:
-  - host: {your_site}.com
-    http:
-      paths:
-      - backend:
-          service:
-            name: {FILL_ME_IN}
-            port:
-              number: {FILL_ME_IN}
-        path: /
-        pathType: ImplementationSpecific
-  tls:
-  - hosts:
-    - {your_site}.com
-    secretName: {your_site}.com
-```
+## Don't apply your own Ingress
 
-Also this will create a secret containing your TLS keys. The certificate is only issued once your domain's DNS
-is on GuldenTech's Cloudflare (see the DNS section above), so finish that first or issuing will fail.
+Older guides had you apply an Ingress with cert-manager and Traefik annotations. That no longer works:
+
+- You don't have permission to create Ingresses, so `kubectl apply` of one is refused.
+- The cluster no longer issues certificates for sites, and Traefik no longer serves them.
+- If your GitHub Actions workflow or `manifests/` folder still applies an Ingress, remove it. The deploy will fail on it,
+  even though the rest of it goes through.

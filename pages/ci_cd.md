@@ -5,6 +5,10 @@ GuldenTech uses [GitHub Actions](https://docs.github.com/en/actions) for CI/CD, 
 Deployments use **in-cluster `kubectl`**: your runner pods authenticate to Kubernetes with their own ServiceAccount,
 scoped by RBAC to the namespaces you allow. There's no Rancher token or kubeconfig stored in GitHub.
 
+?> Your pipeline builds, pushes and rolls out your Deployment. It doesn't create namespaces, network rules or
+Ingresses: those come from us (see [Namespaces and limits](/pages/namespaces) and
+[Hostnames and domains](/pages/ingress)).
+
 ---
 
 ## Self-Hosted Runners
@@ -149,20 +153,34 @@ Expand `rules` based on what your pipelines actually do:
 | `secrets` | core | `get` | Reading secrets in-pipeline (use sparingly) |
 | `pods` | core | `get`, `list` | Checking pods and logs |
 | `services` | core | `get`, `create`, `patch`, `update` | Exposing app internally |
-| `ingresses` | `networking.k8s.io` | `get`, `create`, `patch`, `update` | Managing external access / TLS |
 
-### Full access (wildcard)
+### What a runner can't be given
 
-If you want the runner to have unrestricted access within a namespace, you can use a wildcard rule:
+You can only grant a runner permissions you hold yourself, and the Tenant role can't write Ingresses, network policies
+or namespaces. A Role that includes them (a wildcard `*` rule, for example) is refused. If a pipeline needs one of
+those changed, ask us.
+
+---
+
+## Building images
+
+Runners can build images with Docker by default. That works through a privileged "Docker-in-Docker" helper container
+next to the runner, which is more access than a build should need. We're moving runners to a shared, rootless
+**BuildKit** instead: the runner sends the build to BuildKit, which builds and pushes straight to Harbor. If you want
+that, ask us to set it up for your runner namespace, then:
+
+- set `dockerEnabled: false` on your `RunnerDeployment` (`spec.template.spec`);
+- replace the Buildx step in your workflow with a remote driver:
 
 ```yaml
-rules:
-  - apiGroups: ["*"]
-    resources: ["*"]
-    verbs: ["*"]
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver: remote
+          endpoint: tcp://buildkitd.<tenant>-buildkit.svc.cluster.local:1234
 ```
 
-!> **Avoid this in production.** Wildcard permissions mean a compromised runner or a buggy pipeline step could delete, overwrite, or exfiltrate anything in that namespace — including secrets. Use specific rules whenever possible and only fall back to `*` for quick experimentation or non-sensitive environments.
+The rest of the workflow (`docker/login-action`, `docker/build-push-action`) stays the same.
 
 ---
 

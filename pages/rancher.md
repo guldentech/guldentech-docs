@@ -9,8 +9,8 @@ kubeconfig before that, log in again with the new address below, or download a f
 then, Rancher refuses the login. Email [guldentechjobs@gmail.com](mailto:guldentechjobs@gmail.com) with your GitHub
 username to get set up.
 
-Rancher is the web console for the GuldenTech Kubernetes clusters. Each user gets their own Rancher project, and you
-create your Kubernetes namespaces inside it. You can use the console in your browser, or work from your terminal
+Rancher is the web console for the GuldenTech Kubernetes clusters. Each user gets their own Rancher project, and your
+Kubernetes namespaces live inside it. You can use the console in your browser, or work from your terminal
 with the Rancher CLI.
 
 ## Rancher CLI (recommended)
@@ -48,6 +48,14 @@ The file works as downloaded, with no edits needed. Save it somewhere private (f
 and point tools at it with `--kubeconfig` or `KUBECONFIG`. It contains a token that expires after 30 days, so treat it
 like a password and download a new one when it stops working.
 
-## Create a namespace!
+## Namespaces
 
-Dont forget to create a namespaces on the Rancher console for your project.
+You can't create namespaces in Rancher: they're set up by GuldenTech together with their limits and network rules.
+Ask us for one (or more) by email, see [Namespaces and limits](/pages/namespaces). Once it exists it shows up under
+your project in Rancher.
+
+## What your role allows
+
+You have the **Tenant** role in your project. You can run apps, read logs, open a shell in a pod and manage your own
+Secrets, ConfigMaps and volumes. You can only look at Ingresses, network policies and quotas, and you can't create
+namespaces or add people to your project. Details in [Namespaces and limits](/pages/namespaces?id=what-you-can-do-in-your-namespaces).

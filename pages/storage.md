@@ -13,6 +13,8 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: my-pvc
+  annotations:
+    k8up.io/backup: "true"   # only volumes with this are backed up
 spec:
   accessModes:
     - ReadWriteOnce
@@ -24,4 +26,4 @@ spec:
 
 !> If you use local path, please note that if the node goes down, your pod will not move nodes, it will be in pending state until the node comes back online. Your pod is tied to the node the local-stoage is created on.
 
-!> We do offer data backup! This is offered through [k8up](https://k8up.io/). Please read through the documentation on how to setup your backup job. We very much suggest to use [schedules](https://docs.k8up.io/k8up/2.11/how-tos/schedules.html).
+!> We do offer data backup! This is offered through [k8up](https://k8up.io/), and only for volumes with the `k8up.io/backup: "true"` annotation (shown above). Please read through the documentation on how to setup your backup job. We very much suggest to use [schedules](https://docs.k8up.io/k8up/2.11/how-tos/schedules.html).
